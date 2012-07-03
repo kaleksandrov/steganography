@@ -83,12 +83,9 @@ public class Steganography
 		try
 		{
 			// Encode the message length
-			Log.debug("111111111111");
 			image = this.encodeText(image, len, offset);
-			Log.debug("2222222222222");
 			// Encode the message
 			image = this.encodeText(image, msg, offset + Constants.HIDDEN_MESSAGE_BIT_LENGTH);
-			Log.debug("33333333333");
 		}
 		catch (Exception e)
 		{
@@ -194,7 +191,6 @@ public class Steganography
 	private byte[] decodeText(final BufferedImage image, final int startingOffset)
 	{
 		// Initialize starting variables
-		final int width = image.getWidth();
 		final int height = image.getHeight();
 		final int offset = startingOffset + Constants.HIDDEN_MESSAGE_BIT_LENGTH;
 		int length = 0;

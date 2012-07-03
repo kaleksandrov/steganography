@@ -22,8 +22,6 @@ public interface Constants
 
 	// Configuration
 
-	// String CONF_TEMP_DIRECTORY = "/home/flyingbear/temp";
-
 	String CONF_TEMP_DIRECTORY = "/tmp/steganography";
 
 	long CONF_MAX_FILE_SIZE = 20971520L; // 20 MB
@@ -31,8 +29,6 @@ public interface Constants
 	// Test
 
 	String TEST_MESSAGE = "This is a test";
-
-	String TEST_IMAGE = "/home/flyingbear/stego/test_";
 
 	// Parameters
 
