@@ -1,0 +1,152 @@
+/**************************
+*       Main layout       *
+**************************/
+body {
+	background: green;
+}
+
+input[type='text'],input[type='password'],input[type='submit'],textarea
+	{
+	border: 1px solid #8E846B;
+	border-radius: 4px;
+}
+
+input[type='text'],input[type='password'],input[type='submit'] {
+	height: 30px;
+}
+
+#container {
+	width: 960px;
+	margin: auto;
+}
+
+#tabs {
+	width: 100%;
+}
+
+/**********************************
+*     File upload and message     *
+**********************************/
+.form {
+	width: 100%;
+}
+
+.form .inner-container {
+	margin: 5px 5px 5px 0;
+}
+
+.radio {
+	margin: 8px 0;
+}
+
+.label,.input {
+	margin: 5px;
+}
+
+.label {
+	float: left;
+	width: 140px;
+}
+
+.input {
+	float: right;
+	width: 270px;
+}
+
+.textarea {
+	width: 440px;
+}
+
+.header {
+	color: brown;
+	font-size: 20px;
+	margin: 5px 0;
+}
+
+.decoded-message {
+	background-color: #EEEEEE;
+	border: 1px solid;
+	color: #000000;
+}
+
+/****************************
+*           Images          *
+****************************/
+.image {
+	max-width: 440px;
+	max-height: 1200px;
+}
+
+.images {
+	margin: 20px 0 0 0;
+	width: 100%;
+	display: none;
+}
+
+.images .image-container {
+	width: 50%;
+}
+
+.images .inner-container-right {
+	margin: 0 0 0 10px;
+	float: left;
+}
+
+.images .inner-container-left {
+	margin: 0 10px 0 0;
+	float: right;
+}
+
+/*************************
+*        Messages        *
+*************************/
+.messages {
+	
+}
+
+.messages .error {
+	color: red;
+}
+
+.messages .info {
+	color: green;
+}
+
+.messages .warn {
+	color: orange;
+}
+
+/************************* 
+*         Common         * 
+**************************/
+.half {
+	width: 50%;
+}
+
+.spacer {
+	margin: 10px;
+}
+
+.clear {
+	clear: both;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.loading {
+	background: url("../img/loadingAnimation.gif") no-repeat scroll center
+		center white;
+	display: none;
+	height: 100%;
+	opacity: 0.7;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
