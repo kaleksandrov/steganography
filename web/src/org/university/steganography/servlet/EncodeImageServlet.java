@@ -14,8 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.university.steganography.algorithm.Steganography;
-import org.university.steganography.exception.SteganographyException;
+import org.steganography.algorithm.LSBAlgorithm;
+import org.steganography.algorithm.SteganographyAlgorithm;
+import org.steganography.exception.SteganographyException;
+//import org.university.steganography.algorithm.Steganography;
+//import org.university.steganography.exception.SteganographyException;
 import org.university.steganography.servlet.response.EncodeServletResponse;
 import org.university.steganography.servlet.response.Status;
 import org.university.steganography.util.Constants;
@@ -83,7 +86,8 @@ public class EncodeImageServlet extends HttpServlet
 		final int startingOffset = Utils.calculateStartingOffset(password, imageLength);
 		Log.info("Statring byte index : " + startingOffset);
 
-		Steganography steganography = new Steganography();
+//		Steganography steganography = new Steganography();
+		SteganographyAlgorithm steganography = new LSBAlgorithm();
 		BufferedImage encodedImage = null;
 		try
 		{

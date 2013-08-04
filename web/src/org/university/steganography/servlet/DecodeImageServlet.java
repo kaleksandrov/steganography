@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import org.university.steganography.algorithm.Steganography;
-import org.university.steganography.exception.SteganographyException;
+import org.steganography.algorithm.LSBAlgorithm;
+import org.steganography.algorithm.SteganographyAlgorithm;
+import org.steganography.exception.SteganographyException;
+//import org.university.steganography.algorithm.Steganography;
+//import org.university.steganography.exception.SteganographyException;
 import org.university.steganography.servlet.response.DecodeServletResponse;
 import org.university.steganography.servlet.response.Status;
 import org.university.steganography.util.Constants;
@@ -33,61 +36,58 @@ import com.google.gson.Gson;
  * @author Kiril Aleksandrov
  * 
  */
-@WebServlet(urlPatterns =
-{ Constants.SERVLET_DECODE_IMAGE })
+@WebServlet(urlPatterns = { Constants.SERVLET_DECODE_IMAGE })
 @MultipartConfig(location = Constants.CONF_TEMP_DIRECTORY, maxFileSize = Constants.CONF_MAX_FILE_SIZE)
-public class DecodeImageServlet extends HttpServlet
-{
+public class DecodeImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	{
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) {
 		// Initialize variables and ger HTTP request parameters
 
 		Status status = new Status();
 
-		String sourceType = request.getParameter(Constants.PARAM_DECODED_SOURCE);
+		String sourceType = request
+				.getParameter(Constants.PARAM_DECODED_SOURCE);
 		String password = request.getParameter(Constants.PARAM_DECODE_PASSWORD);
 		BufferedImage image = null;
 
-		try
-		{
-			if (Constants.SOURCE_TYPE_LOCAL.equalsIgnoreCase(sourceType))
-			{
+		try {
+			if (Constants.SOURCE_TYPE_LOCAL.equalsIgnoreCase(sourceType)) {
 				// Read the image from the request object
-				Part filePart = request.getPart(Constants.PARAM_FILE_DECODE_LOCAL);
+				Part filePart = request
+						.getPart(Constants.PARAM_FILE_DECODE_LOCAL);
 
 				InputStream filecontent = filePart.getInputStream();
 				image = Utils.streamToImage(filecontent);
 				filecontent.close();
-			}
-			else if (Constants.SOURCE_TYPE_REMOTE.equalsIgnoreCase(sourceType))
-			{
+			} else if (Constants.SOURCE_TYPE_REMOTE
+					.equalsIgnoreCase(sourceType)) {
 				// Read the request from remote resource
-				String remoteAddress = request.getParameter(Constants.PARAM_FILE_DECODE_REMOTE);
+				String remoteAddress = request
+						.getParameter(Constants.PARAM_FILE_DECODE_REMOTE);
 				image = Utils.loadRemoteFile(remoteAddress);
 			}
-		}
-		catch (IOException | ServletException e)
-		{
-			status.addMessage(Constants.MESSAGE_TYPE_ERROR, "Error uploading image");
+		} catch (IOException | ServletException e) {
+			status.addMessage(Constants.MESSAGE_TYPE_ERROR,
+					"Error uploading image");
 		}
 
 		final int imageLength = image.getHeight() * image.getWidth();
-		final int startingOffset = Utils.calculateStartingOffset(password, imageLength);
+		final int startingOffset = Utils.calculateStartingOffset(password,
+				imageLength);
 		Log.info("Starting byte index : " + startingOffset);
 
 		// Decode the image
-		Steganography steganography = new Steganography();
+		// Steganography steganography = new Steganography();
+		SteganographyAlgorithm steganography = new LSBAlgorithm();
 		String message = null;
-		try
-		{
+		try {
 			message = steganography.decode(image, startingOffset);
-		}
-		catch (SteganographyException e1)
-		{
-			status.addMessage(Constants.MESSAGE_TYPE_ERROR, "Error decoding image");
+		} catch (SteganographyException e1) {
+			status.addMessage(Constants.MESSAGE_TYPE_ERROR,
+					"Error decoding image");
 		}
 
 		request.setAttribute(Constants.ATTR_MESSAGE, message);
@@ -100,17 +100,14 @@ public class DecodeImageServlet extends HttpServlet
 		// Writes the response object to the HTTP response stream that is
 		// returned to the client
 		PrintWriter out = null;
-		try
-		{
+		try {
 			out = new PrintWriter(response.getOutputStream());
-		}
-		catch (IOException e)
-		{
-			status.addMessage(Constants.MESSAGE_TYPE_ERROR, "Error writing response");
+		} catch (IOException e) {
+			status.addMessage(Constants.MESSAGE_TYPE_ERROR,
+					"Error writing response");
 		}
 
-		if (null != out)
-		{
+		if (null != out) {
 			Gson gson = new Gson();
 			Log.info(gson.toJson(responseWrapper));
 
